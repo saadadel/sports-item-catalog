@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block content %}
+	<div class="content-section">
+		Are you sure, you want to Delete <span style="font-weight: bold;">{{ item.name }}</span>?
+		<span style="color: red;"><a href="{{ url_for('Delete', choosed_item=item.name) }}">Yes</a></span>
+		<a href="{{ url_for('main') }}">No</a>
+
+	</div>
+{% endblock content %}

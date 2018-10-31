@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="w3-content" style="max-width:1300px">
+		<div class="w3-row">
+			<div class="w3-half w3-black w3-container w3-center" style="height:1000px">
+			    
+			    <div class="w3-padding-64">
+			      	<div class="w3-padding-32">
+						<h1><a href="/catalog/{{category.name}}/items" class="w3-button w3-black w3-block w3-hover-teal w3-padding-16">{{category.name}}</a></h1>
+					</div>
+			    </div>
+		 	 </div>
+		 	 <div class="w3-half w3-blue-grey w3-container w3-center" style="height:1000px;">
+		 	 	
+			    <div class="w3-padding-64 w3-center">
+			    	{% if current_user.is_authenticated %}
+			    			<a href="{{ url_for('addItem') }}">
+			    				<h4>add item</h4>
+			    			</a>
+			    	{% endif %}
+			   		<div class="w3-padding-32">
+						<h1>It's Items</h1>
+					</div>
+					{% for item in items %}
+						<a href="/catalog/{{item.category.name}}/{{item.name}}" class="w3-button w3-block w3-hover-brown w3-padding-16">{{item.name}}<span style="color: #484849; :hover{color:white;}">({{item.category.name}})</span></a>
+					{% endfor %}
+			    </div>
+			</div>
+		</div>
+	</div>
+{% endblock content %}
+
+
