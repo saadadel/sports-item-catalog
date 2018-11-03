@@ -16,6 +16,8 @@ cd *path to your file location*
 vagrant up
 vagrant ssh
 cd /vagrant/catalog/Project4
+pip install flask_bcrypt
+pip install flask_login
 python lotsofcategories.py
 Python run.py
 ```

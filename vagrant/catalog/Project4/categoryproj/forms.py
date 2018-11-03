@@ -6,8 +6,13 @@ from wtforms import StringField, PasswordField, SubmitField, \
 from wtforms.validators import DataRequired, Length, Email, EqualTo, \
     ValidationError
 from categoryproj.database import User, Base
-from categoryproj import session
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
+engine = create_engine('sqlite:///catalog.db')
+Base.metadata.bind = engine
+DBSession = sessionmaker(bind=engine)
+session = DBSession()
 
 class RegistrationForm(FlaskForm):
 

@@ -2,10 +2,12 @@
 # -*- coding: utf-8 -*-
 from flask import request, render_template, flash, url_for, \
     session as login_session, flash, redirect, abort, jsonify
-from categoryproj.database import Category, Item, User
+from categoryproj.database import Category, Item, User, Base
 from categoryproj.forms import RegistrationForm, LoginForm, AddItem, \
     EditItem
-from categoryproj import app, bcrypt, session
+from categoryproj import app, bcrypt
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 from flask_login import login_user, logout_user, current_user, \
     login_required
 from sqlalchemy import update, delete
@@ -25,6 +27,11 @@ APPLICATION_NAME = 'Catalog Application'
 CLIENT_ID = json.loads(open('client_secrets.json', 'r').read())['web'
         ]['client_id']
 
+
+engine = create_engine('sqlite:///catalog.db')
+Base.metadata.bind = engine
+DBSession = sessionmaker(bind=engine)
+session = DBSession()
 
 def latestItems():
     items = session.query(Item).all()

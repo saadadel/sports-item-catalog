@@ -9,9 +9,9 @@ from categoryproj import app
 
 Base = declarative_base()
 engine = create_engine('sqlite:///catalog.db')
-#DBSession = sessionmaker(bind=engine)
-#session = DBSession()
-from categoryproj import session, login_manager
+DBSession = sessionmaker(bind=engine)
+session = DBSession()
+from categoryproj import login_manager
 
 #login_manager = LoginManager(app)
 
