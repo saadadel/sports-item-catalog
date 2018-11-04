@@ -60,7 +60,7 @@ def main():
 @app.route('/catalog/<choosed_category>/items')
 def categoryItemsList(choosed_category):
     cat = \
-        session.query(Category).filter_by(name=choosed_category).first()
+        session.query(Category).filter_by(name=choosed_category).one_or_none()
     items = session.query(Item).filter_by(category_id=cat.id)
     return render_template(
         'categoryItems.html', category=cat, items=items, title=cat.name)
@@ -81,10 +81,17 @@ def categoriesJSON():
 # json endpoint for a specific cateogry
 @app.route('/catalog.json/<category>')
 def categoryJson(category):
-    cat = session.query(Category).filter_by(name=category).first()
+    cat = session.query(Category).filter_by(name=category).one_or_none()
     items = session.query(Item).filter_by(category=cat).all()
     cat_json = [cat.serialize, [item.serialize for item in items]]
     return jsonify(caegory=cat_json)
+
+# json endpoint for a specific item
+@app.route('/catalog.json/<category>/<item>')
+def itemJson(category, item):
+    cat = session.query(Category).filter_by(name=category).one_or_none()
+    item_obj = session.query(Item).filter_by(category=cat).filter_by(name=item).one_or_none()
+    return jsonify(item = item_obj.serialize)
 
 
 # add new item
@@ -124,7 +131,7 @@ def categoryItems(choosed_category, choosed_item):
         name=choosed_category).one_or_none()
     item = \
         session.query(Item). \
-        filter_by(category=cat).filter_by(name=choosed_item).first()
+        filter_by(category=cat).filter_by(name=choosed_item).one_or_none()
     return render_template('itemDesc.html', item=item, title=choosed_item)
 
 
@@ -138,7 +145,7 @@ def editItem(choosed_category, choosed_item):
         name=choosed_category).one_or_none()
     item = \
         session.query(Item). \
-        filter_by(category=cat).filter_by(name=choosed_item).first()
+        filter_by(category=cat).filter_by(name=choosed_item).one_or_none()
     form = EditItem(
         item_name=item.name, description=item.description
     )  # set a default values for the form fields
@@ -167,7 +174,7 @@ def deleteItem(choosed_category, choosed_item):
         name=choosed_category).one_or_none()
     item = \
         session.query(Item). \
-        filter_by(category=cat).filter_by(name=choosed_item).first()
+        filter_by(category=cat).filter_by(name=choosed_item).one_or_none()
     if item.user.email != current_user.email:
         abort(403)
     session.delete(item)
@@ -204,7 +211,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = \
-            session.query(User).filter_by(email=form.email.data).first()
+            session.query(User).filter_by(email=form.email.data).one_or_none()
         if user and bcrypt.check_password_hash(user.password,
                                                form.password.data):
             login_user(user, remember=form.remember.data)
@@ -334,7 +341,7 @@ def gconnect():
 
     # login the new user and create the account in the database if it's not
     new_user = session.query(User).filter_by(
-        email=login_session['email']).first()
+        email=login_session['email']).one_or_none()
     if not new_user:
         new_user = User(
             username=login_session['username'],
