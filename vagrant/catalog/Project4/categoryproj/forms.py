@@ -14,14 +14,17 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
+
 class RegistrationForm(FlaskForm):
 
-    username = StringField('Username', validators=[DataRequired(),
-                           Length(min=2, max=20)])
+    username = StringField(
+        'Username', validators=[DataRequired(),
+                                Length(min=2, max=20)])
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
-    confirm_password = PasswordField('Confirm Password',
-            validators=[DataRequired(), EqualTo('password')])
+    confirm_password = PasswordField(
+        'Confirm Password', validators=[DataRequired(),
+                                        EqualTo('password')])
 
     submit = SubmitField('Sign Up')
 
@@ -40,11 +43,9 @@ class LoginForm(FlaskForm):
 
 
 class AddItem(FlaskForm):
-
     """docstring for AddItem"""
 
-    category_name = SelectField('Categroy Name',
-                                validators=[DataRequired()])
+    category_name = SelectField('Categroy Name', validators=[DataRequired()])
     item_name = StringField('Item Name', validators=[DataRequired()])
     description = StringField('Decription', validators=[DataRequired()])
 
@@ -52,11 +53,9 @@ class AddItem(FlaskForm):
 
 
 class EditItem(FlaskForm):
-
     """docstring for AddItem"""
 
     item_name = StringField('Item Name', validators=[DataRequired()])
-    description = TextAreaField('Decription',
-                                validators=[DataRequired()])
+    description = TextAreaField('Decription', validators=[DataRequired()])
 
     submit = SubmitField('Apply')

@@ -18,7 +18,8 @@ DBSession = sessionmaker(bind=engine)
 # session.rollback()
 session = DBSession()
 
-user1 = User(username="Saad Adel", email="saad.adel539@yahoo.com", password="123456789", image="static/me.jpg")
+user1 = User(username="Saad Adel", email="saad.adel539@yahoo.com",
+             password="123456789", image="static/me.jpg")
 session.add(user1)
 session.commit()
 
@@ -51,7 +52,6 @@ session.add(item3)
 session.commit()
 
 
-
 category2 = Category(name="BasketBall", user=user1)
 
 session.add(category2)
@@ -80,8 +80,6 @@ The coach or referee uses a whistle to indicate the start or end of a game. S/he
 
 session.add(item3)
 session.commit()
-
-
 
 
 category3 = Category(name="BaseBall", user=user1)
@@ -142,7 +140,6 @@ session.add(item3)
 session.commit()
 
 
-
 category5 = Category(name="Skating", user=user1)
 
 session.add(category5)
@@ -170,7 +167,6 @@ There is not a dress code for ice rinks or frozen ponds, but you do want to cons
 
 session.add(item3)
 session.commit()
-
 
 
 print "added menu items!"

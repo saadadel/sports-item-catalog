@@ -19,8 +19,6 @@ app.config['SECRET_KEY'] = \
     '5454d5as1d5asd4as5f1sd5c1sd6a8s7das6x4z3c1ds8c4sd'
 bcrypt = Bcrypt(app)
 
-
-
 login_manager.login_view = 'login'
 
 from categoryproj import routes

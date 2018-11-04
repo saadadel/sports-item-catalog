@@ -22,3 +22,6 @@ python lotsofcategories.py
 Python run.py
 ```
 
+## JSON Endpoins
+-	you can find a json endpoint for all sports categories and in's items at localhost://5000/catalog.json
+-	and a specific category endpoint at localhost://5000/catalog.json/<category_name>

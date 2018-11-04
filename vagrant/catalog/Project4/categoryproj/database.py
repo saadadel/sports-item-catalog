@@ -13,7 +13,7 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 from categoryproj import login_manager
 
-#login_manager = LoginManager(app)
+# login_manager = LoginManager(app)
 
 
 @login_manager.user_loader
